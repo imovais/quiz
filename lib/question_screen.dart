@@ -13,8 +13,6 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-
-
   var questionIndex = 0;
 
   void changeQuestion() {
@@ -38,9 +36,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
   }
 
 //working on summary data
-  List<Map<String, Object>> summarydata (){
-      List<Map<String, Object>> summaryList = [];
-    return 
+  List<Map<String, Object>> summarydata() {
+    List<Map<String, Object>> summaryList = [];
+    return summaryList;
   }
 
   @override
