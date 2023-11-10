@@ -14,6 +14,8 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   var questionIndex = 0;
+  var selectedAnswer = '';
+  List<Map<String, Object>> summaryList = [];
 
   void changeQuestion() {
     setState(() {
@@ -23,7 +25,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ResultScreen(questionIndex: questionIndex),
+              builder: (context) => ResultScreen(
+                  questionIndex: questionIndex, summarydata: summaryList),
             ));
       }
     });
@@ -36,14 +39,19 @@ class _QuestionScreenState extends State<QuestionScreen> {
   }
 
 //working on summary data
-  List<Map<String, Object>> summarydata() {
-    List<Map<String, Object>> summaryList = [];
-    return summaryList;
+  void summarydata() {
+    summaryList.add({
+      'questionIndex': questionIndex + 1,
+      'question': data[questionIndex].question,
+      'correctAnswer': data[questionIndex].answers[0],
+      'SelectedAnswer': selectedAnswer,
+      'result':
+          data[questionIndex].answers[0] == selectedAnswer ? "Correct" : "Wrong"
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(getSufflist());
     return Scaffold(
         backgroundColor: primary,
         body: Container(
@@ -61,7 +69,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
               ),
               const SizedBox(height: 20),
               ...getSufflist().map((ans) {
-                return AnswerButton(text: ans, ontap: changeQuestion);
+                return AnswerButton(
+                    text: ans,
+                    ontap: () {
+                      selectedAnswer = ans;
+                      summarydata();
+                      changeQuestion();
+                    });
               })
             ],
           ),
